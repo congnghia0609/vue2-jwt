@@ -3,7 +3,6 @@
   <div class="container">
     <header class="jumbotron">
       <h3>{{content}}</h3>
-      <h4>This is Home Page</h4>
     </header>
   </div>
 </template>
@@ -15,7 +14,7 @@ export default {
   name: 'Home',
   data() {
     return {
-      content: 'This is Home Page'
+      content: ''
     };
   },
   mounted() {

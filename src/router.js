@@ -8,7 +8,7 @@ Vue.use(Router);
 
 export const router = new Router({
   mode: 'history',
-  router: [
+  routes: [
     {
       path: '/',
       name: 'home',
