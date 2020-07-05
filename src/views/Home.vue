@@ -3,28 +3,30 @@
   <div class="container">
     <header class="jumbotron">
       <h3>{{content}}</h3>
+      <h4>This is Home Page</h4>
     </header>
   </div>
 </template>
 
 <script>
-import UserService from "../services/user.service";
+// import UserService from "../services/user.service";
 
 export default {
   name: 'Home',
   data() {
     return {
-      content: ''
+      content: 'This is Home Page'
     };
   },
   mounted() {
-    UserService.getPublichContent().then(res => {
-      this.content = res.data;
-    }, error => {
-      this.content = (error.res && error.res.data) ||
-          error.message ||
-          error.toString();
-    });
+    this.content = "This is Home Page";
+    // UserService.getPublichContent().then(res => {
+    //   this.content = res.data;
+    // }, error => {
+    //   this.content = (error.res && error.res.data) ||
+    //       error.message ||
+    //       error.toString();
+    // });
   }
 };
 </script>

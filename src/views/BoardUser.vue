@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import UserService from "../services/user.service";
+// import UserService from "../services/user.service";
 
 export default {
   name: 'User',
@@ -18,13 +18,14 @@ export default {
     };
   },
   mounted() {
-    UserService.getUserBoard().then(res => {
-      this.content = res.data;
-    }, error => {
-      this.content = (error.res && error.res.data) ||
-          error.message ||
-          error.toString();
-    });
+    this.content = "This is User Page";
+    // UserService.getUserBoard().then(res => {
+    //   this.content = res.data;
+    // }, error => {
+    //   this.content = (error.res && error.res.data) ||
+    //       error.message ||
+    //       error.toString();
+    // });
   }
 }
 </script>
