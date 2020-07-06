@@ -9,19 +9,20 @@
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label for="email">Email</label>
           <input
-            v-model="user.username"
-            v-validate="'required'"
-            type="text"
+            v-model="user.email"
+            v-validate="'required|email'"
+            type="email"
             class="form-control"
-            name="username"
+            placeholder="Email" 
+            name="email"
           />
           <div
-            v-if="errors.has('username')"
+            v-if="errors.has('email')"
             class="alert alert-danger"
             role="alert"
-          >Username is required!</div>
+          >{{errors.first('email')}}</div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -30,6 +31,7 @@
             v-validate="'required'"
             type="password"
             class="form-control"
+            placeholder="Password" 
             name="password"
           />
           <div
@@ -58,7 +60,7 @@ export default {
   name: 'Login',
   data() {
     return {
-      user: new User('', ''),
+      user: new User('', '', '', ''),
       loading: false,
       message: ''
     };
@@ -76,12 +78,12 @@ export default {
   methods: {
     handleLogin() {
       this.loading = true;
-      this.$validate.validateAll().then(isValid => {
+      this.$validator.validateAll().then(isValid => {
         if(!isValid) {
           this.loading = false;
           return;
         }
-        if(this.user.username && this.user.password) {
+        if(this.user.email && this.user.password) {
           this.$store.dispatch('auth/login', this.user).then(() => {
             this.$router.push('/profile');
           })

@@ -1,17 +1,18 @@
 import axios from "axios";
 
-const API_URL = 'http://localhost:8787/api/v1/';
+const API_URL = 'http://localhost:8080/api/v1/';
+// axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 class AuthService {
 	login(user) {
 		return axios.post(API_URL + 'token', {
-			username: user.username,
+			email: user.email,
 			password: user.password
 		}).then(res => {
-			if(res.data.token) {
-				localStorage.setItem('user', JSON.stringify(res.data))
+			if(res.data.user.token) {
+				localStorage.setItem('user', JSON.stringify(res.data.user))
 			}
-			return res.data;
+			return res.data.user;
 		}).catch(e => {
 			console.log(e);
 		})
@@ -25,7 +26,8 @@ class AuthService {
 		return axios.post(API_URL + 'signup', {
 			username: user.username,
 			email: user.email,
-			password: user.password
+			password: user.password,
+			repassword: user.repassword
 		});
 	}
 }

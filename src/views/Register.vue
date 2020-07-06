@@ -13,9 +13,10 @@
             <label for="username">Username</label>
             <input
               v-model="user.username"
-              v-validate="'required|min:3|max:20'"
+              v-validate="'required|min:3|max:50'"
               type="text"
               class="form-control"
+              placeholder="Username" 
               name="username"
             />
             <div
@@ -27,9 +28,10 @@
             <label for="email">Email</label>
             <input
               v-model="user.email"
-              v-validate="'required|email|max:50'"
+              v-validate="'required|email|max:100'"
               type="email"
               class="form-control"
+              placeholder="Email" 
               name="email"
             />
             <div
@@ -41,16 +43,34 @@
             <label for="password">Password</label>
             <input
               v-model="user.password"
-              v-validate="'required|min:6|max:40'"
+              v-validate="'required|min:6|max:100'"
               type="password"
               class="form-control"
+              placeholder="Password" 
               name="password"
+              ref="password"
             />
             <div
               v-if="submitted && errors.has('password')"
               class="alert-danger"
             >{{errors.first('password')}}</div>
           </div>
+          <div class="form-group">
+            <label for="repassword">Confirm Password</label>
+            <input 
+              v-model="user.repassword"
+              v-validate="'required|confirmed:password'" 
+              name="repassword" 
+              type="password" 
+              class="form-control" 
+              placeholder="Confirm Password" 
+              data-vv-as="password">
+            <div
+              v-if="submitted && errors.has('repassword')"
+              class="alert-danger"
+            >{{errors.first('repassword')}}</div>
+          </div>
+
           <div class="form-group">
             <button class="btn btn-primary btn-block">Sign Up</button>
           </div>
@@ -73,7 +93,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      user: new User('', '', ''),
+      user: new User('', '', '', ''),
       submitted: false,
       successful: false,
       message: ''
@@ -93,10 +113,11 @@ export default {
     handleRegister() {
       this.message = '';
       this.submitted = true;
-      this.$validator.validate().then(isValid => {
+      this.$validator.validateAll().then(isValid => {
+        console.log(this.user);
         if(isValid) {
           this.$store.dispatch('auth/register', this.user).then(data => {
-            this.message = data.message;
+            this.message = data.msg;
             this.successful = true;
           }, error => {
             this.message = (error.response && error.response.data) ||
